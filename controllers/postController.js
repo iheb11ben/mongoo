@@ -16,12 +16,16 @@ const getPostBYIDController=async(req,res)=>{
     res.status(StatusCodes.OK).send(post)
 }
 const updatePostController=async(req,res)=>{
-    const id=req.params.id
-    const post_to_update=await updatePost(req.body,id)
+    const{
+        body:{postName,postContent},
+        params:{id:postID}
+    }=req
+    
+    const post_to_update=await updatePost({postName,postContent},postID)
     if (!post_to_update) {
         return res.status(StatusCodes.BAD_REQUEST).send('no post with this id')
     }
-    res.status(StatusCodes.OK).send(post_to_update,'updated')
+    res.status(StatusCodes.OK).send('updated')
 }
 const deletePostController=async(req,res)=>{
     const id=req.params.id
